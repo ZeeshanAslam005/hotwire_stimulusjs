@@ -1,0 +1,30 @@
+<%= turbo_frame_tag "modal" do %>
+  <%= tag.div data: { controller: "turbo-modal",
+                      turbo_modal_target: "modal",
+                      action: "keyup@window->turbo-modal#closeWithKeyboard click@window->turbo-modal#closeBackground" },
+                      class: "p-5 bg-slate-300 absolute z-10 top-10 right-10 rounded-md w-96 break-words" do %>
+    <h1 class="font-bold text-4xl">NewEmployment</h1>
+    
+    <%= form_with model: Employee.new, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' } do |f| %>
+
+      <template data-nested-form-target="template">
+        <%= f.fields_for :employments, Employment.new, child_index: 'NEW_RECORD' do |employment_fields| %>
+          <%= render "form", f: employment_fields %>
+        <% end %>
+      </template>
+    
+      <%= f.fields_for :employments do |employment_fields| %>
+        <%= render "form", f: employment_fields %>
+      <% end %>
+    
+      <!-- Inserted elements will be injected before that target. -->
+      <div data-nested-form-target="target"></div>
+    
+      <button type="button" data-action="nested-form#add">Add</button>
+    
+      <%= f.submit 'Save' , data: { action: "turbo:submit-end->nested-form#submitEnd" } %>
+    <% end %> 
+
+    <%= button_tag "Close", data: { action: "turbo-modal#hideModal" }, type: "button", class: "rounded-lg py-3 px-5 bg-red-600 text-white" %>
+  <% end %>
+<% end %>

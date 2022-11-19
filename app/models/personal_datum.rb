@@ -4,8 +4,7 @@ class PersonalDatum < ApplicationRecord
     validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP } 
     validates :phone, presence: true
     validates :phone,   :presence => {:message => 'Phone number invalid'},
-                        :numericality => true,
-                        :length => { :minimum => 10, :maximum => 10 }
+                        :length => { :minimum => 12, :maximum => 12 }
 
     validates_length_of :first_name, maximum: 25
     validates_length_of :last_name, maximum: 50

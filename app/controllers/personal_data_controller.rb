@@ -1,15 +1,11 @@
 class PersonalDataController < ApplicationController
-  before_action :ensure_frame_response, only: [:new, :edit]
-
-  def index
-    @personal_data = PersonalDatum.all
-  end
+  before_action :ensure_frame_response, only: [:new]
 
   def new
     @personal_datum = PersonalDatum.new
   end
 
-  def create    
+  def create
     @personal_datum = PersonalDatum.new(personal_datum_params)
 
     respond_to do |format|

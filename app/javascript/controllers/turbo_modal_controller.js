@@ -4,9 +4,45 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["modal", "email"]
 
-
   connect() {
     console.log("connect")
+    this.disableForm()
+  }
+
+  disableForm() {
+    this.submitButtons().forEach(button => {
+      button.disabled = true
+      button.classList.add("bg-gray-200");
+    })
+  }
+
+  enableForm() {
+    this.submitButtons().forEach(button => {
+      button.disabled = false
+      button.classList.remove("bg-gray-200");
+    })
+  }
+
+  submitButtons() {
+    return this.element.querySelectorAll("input[type='submit']")
+  }
+
+  checkForm(event)
+  {
+      
+      var f = event.target.form.elements;
+      var cansubmit = true;
+
+      for (var i = 0; i < f.length; i++) {
+          if (f[i].value.length == 0) cansubmit = false;
+      }
+      console.log(cansubmit)
+      if (cansubmit) {
+          this.enableForm();
+      }
+      else {
+          this.enableForm;
+      }
   }
 
   emailValidator(event) {
@@ -15,6 +51,7 @@ export default class extends Controller {
       document.getElementById("email-msg").innerText = "";
       document.getElementById("phone").disabled = false;
       document.getElementById("phone").classList.remove("bg-gray-200");
+      this.checkForm(event)
     } else {
       document.getElementById("email-msg").innerText = "Email is inavlid";
       document.getElementById("phone").disabled = true;
@@ -44,10 +81,10 @@ export default class extends Controller {
         if(input.length > 6){evt.target.value = `${areaCode}-${middle}-${last}`;}
         else if(input.length > 3){evt.target.value = `${areaCode}-${middle}`;}
         else if(input.length > 0){evt.target.value = `${areaCode}`;}
+        this.checkForm(evt)
         
       }
-
-}
+  }
 
   hideModal() {
     this.element.parentElement.removeAttribute("src")

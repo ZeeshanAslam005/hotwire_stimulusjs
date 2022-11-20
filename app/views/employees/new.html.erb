@@ -19,11 +19,11 @@
     
       <div data-nested-form-target="target"></div>
     
-      <button type="button" data-action="nested-form#add">Add</button>
+      <button type="button" data-action="nested-form#add">Add Employee</button>
     
-      <%= f.submit 'Save' , data: { action: "turbo:submit-end->nested-form#submitEnd" } %>
+      <%= f.submit 'Save', class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" , data: { action: "turbo:submit-end->nested-form#submitEnd" } %>
     <% end %> 
 
-    <%= button_tag "Close", data: { action: "turbo-modal#hideModal" }, type: "button", class: "rounded-lg py-3 px-5 bg-red-600 text-white" %>
+    <%= button_tag "Cancel", data: { action: "turbo-modal#hideModal" }, type: "button", class: "rounded-lg py-3 px-5 bg-red-600 text-white" %>
   <% end %>
 <% end %>

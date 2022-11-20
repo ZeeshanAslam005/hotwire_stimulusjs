@@ -1,0 +1,25 @@
+= form_with(model: personal_datum) do |form|
+  div
+    = form.label :first_name, style: "display: block"
+    = form.text_field :first_name, required: true, data: { action: "keyup->turbo-modal#checkForm" }
+    = error_msg(personal_datum, :first_name)
+  div
+    = form.label :last_name, style: "display: block"
+    = form.text_field :last_name, required: true, data: { action: "keyup->turbo-modal#checkForm"}
+    = error_msg(personal_datum, :last_name)
+  div
+    = form.label :nick_name, style: "display: block"
+    = form.text_field :nick_name
+    = error_msg(personal_datum, :nick_name)
+  div
+    = form.label :email, style: "display: block"
+    = form.text_field :email, required: true, data: { action: "keyup->turbo-modal#emailValidator" }
+    #email-msg
+    = error_msg(personal_datum, :email)
+  div
+    = form.label :phone, style: "display: block"
+    = form.text_field :phone, id: "phone", class: "bg-gray-200", required: true, disabled: true, data: { action: "keyup->turbo-modal#phoneValidator" }, :minlength => 12, :maxlength => 12
+    div id=("phone-number should") 
+    = error_msg(personal_datum, :phone)
+  div
+    = form.submit "Save", class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium"

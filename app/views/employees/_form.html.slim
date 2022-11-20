@@ -1,0 +1,14 @@
+.nested-form-wrapper data-new-record="#{f.object.new_record?}" 
+  div
+    = f.label :employeer, style: "display: block"
+    = f.text_field :employeer, required: true, data: { action: "keyup->turbo-modal#checkNestedForm"}
+    = error_msg(@employment, :employeer)
+  div
+    = f.label :date_started, style: "display: block"
+    = f.date_field :date_started, data: { action: "change->turbo-modal#checkNestedForm"}
+    = error_msg(@employment, :date_started)
+  div
+    = f.label :date_employment_ended, style: "display: block"
+    = f.date_field :date_employment_ended, data: { action: "change->turbo-modal#checkNestedForm"}
+    = error_msg(@employment, :date_employment_ended)
+  = f.hidden_field :_destroy

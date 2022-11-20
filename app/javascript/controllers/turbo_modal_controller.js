@@ -11,6 +11,7 @@ export default class extends Controller {
         this.querySelectorAll("input[type='submit']").forEach(button => {
           button.disabled = true
           button.classList.add("bg-gray-200");
+          button.classList.remove("bg-blue-600");
         })
       }
   });
@@ -20,6 +21,7 @@ export default class extends Controller {
     this.submitButtons().forEach(button => {
       button.disabled = true
       button.classList.add("bg-gray-200");
+      button.classList.remove("bg-blue-600");
     })
   }
 
@@ -27,6 +29,7 @@ export default class extends Controller {
     this.submitButtons().forEach(button => {
       button.disabled = false
       button.classList.remove("bg-gray-200");
+      button.classList.add("bg-blue-600");
     })
   }
 
@@ -57,10 +60,10 @@ export default class extends Controller {
       var cansubmit = true;
 
       for (var i = 0; i < f.length; i++) {
-          if (f[i].value.length == 0) { if (f[i].textContent != "Add Employee") cansubmit = false;}
+          if (f[i].value.length == 0) { debugger; if (f[i].textContent.trim() != "Add Employee") cansubmit = false;}
 
       }
-      console.log(cansubmit)
+
       if (cansubmit) {
           this.enableForm();
       }
@@ -110,7 +113,7 @@ export default class extends Controller {
   }
 
   hideModal() {
-    this.element.parentElement.removeAttribute("src")
+    // this.element.parentElement.removeAttribute("src")
     this.modalTarget.remove()
   }
   showEmploymentModal() {

@@ -2,11 +2,18 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="turbo-modal"
 export default class extends Controller {
-  static targets = ["modal", "email"]
+  static targets = ["modal"]
 
   connect() {
-    console.log("connect")
     this.disableForm()
+    document.addEventListener('click',function(e){
+      if(e.target && e.target.id== 'add_employee'){
+        this.querySelectorAll("input[type='submit']").forEach(button => {
+          button.disabled = true
+          button.classList.add("bg-gray-200");
+        })
+      }
+  });
   }
 
   disableForm() {
@@ -29,19 +36,36 @@ export default class extends Controller {
 
   checkForm(event)
   {
-      
       var f = event.target.form.elements;
       var cansubmit = true;
 
       for (var i = 0; i < f.length; i++) {
           if (f[i].value.length == 0) cansubmit = false;
       }
+     
+      if (cansubmit) {
+          this.enableForm();
+      }
+      else {
+          this.disableForm();
+      }
+  }
+
+  checkNestedForm(event)
+  {
+      var f = event.target.form.elements;
+      var cansubmit = true;
+
+      for (var i = 0; i < f.length; i++) {
+          if (f[i].value.length == 0) { if (f[i].textContent != "Add Employee") cansubmit = false;}
+
+      }
       console.log(cansubmit)
       if (cansubmit) {
           this.enableForm();
       }
       else {
-          this.enableForm;
+          this.disableForm();
       }
   }
 
@@ -68,7 +92,6 @@ export default class extends Controller {
     
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       var val = value.substring(0, value.length - 1);
-        console.log(val)
         evt.target.value = val
     }
     else
@@ -97,8 +120,12 @@ export default class extends Controller {
 
   submitEnd(e) {
     if (e.detail.success) {
+      if(document.getElementById("add_employee") == null){
         this.hideModal()
         this.showEmploymentModal()
+        }else{
+          this.hideModal()
+        }
         console.log("showing employee modal")
     }
   }
